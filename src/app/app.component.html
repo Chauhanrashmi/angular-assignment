@@ -1,0 +1,67 @@
+<div class="container">
+   <div class="row" *ngIf="!addNewUserFlag">
+        <form action="/hms/accommodations" method="GET"> 
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2>Search User</h2>
+                </div>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" #mobile/>
+                        <div class="input-group-btn">
+                        <button class="btn btn-primary" type="submit" (click)="doSearch(mobile.value)">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Mobile</th>
+                  <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor = " let user of filteredItems">
+                  <td> {{user.name}} </td>
+                  <td> {{user.mobile}} </td>
+                  <td> {{user.email}} </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <button class="btn btn-primary" (click)="assignCopy()">Reset List</button>
+        </div>
+    </div>
+
+    
+    <div class="row xyz" *ngIf="addNewUserFlag && !alreadyExists">
+        <div class="col-xs-12">
+            <h1 align="center">
+                Add User
+            </h1>
+        </div>
+        <div class="col-xs-12 MTB">
+            <label for="user">User Name:</label>
+            <input type="user" id="usr" placeholder="Enter Name" #usr>
+        </div>
+        <div class="col-xs-12 MTB">
+            <label for="mobile">Mobile:</label>
+            <input type="mobile" id="mbl" placeholder="Enter Mobile Number" #mobil>
+        </div>
+        <div class="col-xs-12 MTB">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter email" #email>
+        </div>
+        <div class="col-xs-12 button-add"><button class="btn btn-purple" type="submit" (click)="addUser(usr.value,mobil.value,email.value)">Add User</button></div>
+    </div>
+    <div *ngIf="alreadyExists">
+    <h1>User Already Exists</h1>
+    <div class="col-xs-12 button-add"><button class="btn btn-purple" type="submit" (click)="ListOfUsers()">List Of Users</button></div>
+    </div>
+</div>
+  
