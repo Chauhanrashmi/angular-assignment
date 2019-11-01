@@ -1,72 +1,89 @@
 import { Component } from '@angular/core';
-import {User} from './user';
-
+import { User } from './_model/user';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../src/app/_services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  successFlag:boolean;
-  addNewUserFlag:boolean;
-  alreadyExists:boolean;
-  filteredItems=[];
-  title = 'appDemo';
+  addNewUserFlag: boolean;
+  alreadyExists: boolean;
+  filteredItems = [];
+  title = 'Searching App';
   searchedIndex;
-  users = [
-    { id: 1, name: 'Renu', mobile: '9595148291', email: 'renu@gmail.com'  },
-    { id: 2, name: 'Rashmi' , mobile: '9595148111', email: 'rashmi@gmail.com'}
-  ];
-  constructor() { }    
-    
+  searchResult: any;
+  isUserAdded: boolean;
+
+  //Validation 
+  userRegisterForm: FormGroup;
+  userRegisterSubmitted = false;
+  userSearchForm: FormGroup;
+  userSearchSubmitted = false;
+  constructor(private userService: UserService,
+    private formBuilder: FormBuilder) { }
+
   ngOnInit() {
     this.assignCopy();
-  } 
-  assignCopy(){
-    this.filteredItems = Object.assign([], this.users);
- }
-  doSearch(number: string) {
+    this.userRegisterForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      mobileNumber: ['', Validators.required],
+      emailAddress: ['', Validators.required]
+    });
 
-    if (!number){
-      this.addNewUserFlag=true;
-    } else {
-      for (var j=0; j<this.users.length; j++) {
-        if (this.users[j].mobile.match(number)) {
-          this.successFlag=true;
-          this.searchedIndex=j;
-          break;
-        } else{
-          this.successFlag=false;
-        }
-
-    }
-    if (this.successFlag) {
-      this.filteredItems=[];
-      this.filteredItems.push(this.users[this.searchedIndex]);
-      this.searchedIndex=null;
-      this.addNewUserFlag=false;
-    } else {
-      this.addNewUserFlag=true;
-    }
-    }
-  
+    this.userSearchForm = this.formBuilder.group({
+      mobileNumber: ['', Validators.required]
+    });
   }
-  addUser(usr,mob,email) {
-    var isPresent = this.users.some(function(el){ return el.mobile === mob});
-    if (!isPresent) {
-      let id=this.users.length+1;
-      let newUser = new User(id,usr,mob,email);
-      this.users.push(newUser);
-      this.addNewUserFlag=false;
+
+   // convenience getter for easy access to form fields
+   get userRegisterFormControls() { return this.userRegisterForm.controls; }
+   get userSearchFormControls() { return this.userSearchForm.controls; }
+
+  assignCopy() {
+    this.filteredItems = Object.assign([], this.userService.getAllUsers());
+  }
+  doSearch() {
+    this.userSearchSubmitted = true;
+    // stop here if form is invalid
+    if (this.userSearchForm.invalid) {
+        return;
+    }
+    this.searchResult = this.userService.getUserByPhoneNo(this.userSearchForm.controls.mobileNumber.value);
+    if (this.searchResult != false) {
+      this.filteredItems = [];
+      this.filteredItems.push(this.searchResult);
+    }
+    else {
+      this.addNewUserFlag = true;
+      this.userRegisterForm.controls.mobileNumber.setValue(this.userSearchForm.controls.mobileNumber.value); 
+    }
+  }
+
+  addUser() {
+    this.userRegisterSubmitted = true;
+    // stop here if form is invalid
+    if (this.userRegisterForm.invalid) {
+        return;
+    }
+    this.isUserAdded = this.userService.addUser(this.userRegisterForm.controls.username.value,this.userRegisterForm.controls.mobileNumber.value,this.userRegisterForm.controls.emailAddress.value);
+    if (this.isUserAdded) {
+      this.addNewUserFlag = false;
+      this.userSearchSubmitted=false;
+      this.userRegisterSubmitted=false;
+      this.userRegisterForm.reset();
+      this.userRegisterForm.reset();
       this.assignCopy();
-    } else {
-      this.alreadyExists=true;
     }
-    
+    else {
+      this.alreadyExists = true;
+    }
   }
+  
   ListOfUsers() {
-    this.alreadyExists=false;
-    this.addNewUserFlag=false;
+    this.alreadyExists = false;
+    this.addNewUserFlag = false;
   }
 }
 

@@ -1,19 +1,20 @@
 <div class="container">
    <div class="row" *ngIf="!addNewUserFlag">
-        <form action="/hms/accommodations" method="GET"> 
+    <form [formGroup]="userSearchForm" (ngSubmit)="doSearch()">
             <div class="row">
                 <div class="col-xs-12">
-                    <h2>Search User</h2>
                 </div>
                 <div class="col-xs-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" #mobile/>
-                        <div class="input-group-btn">
-                        <button class="btn btn-primary" type="submit" (click)="doSearch(mobile.value)">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
+                        <div class="form-group">
+                                <label>Search by Mobile Number : </label>
+                                <input type="number" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userSearchSubmitted && userSearchFormControls.mobileNumber.errors }" />
+                                <div *ngIf="userSearchSubmitted && userSearchFormControls.mobileNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="userSearchFormControls.mobileNumber.errors.required">Mobile Number is required</div>
+                                </div>
                         </div>
-                    </div>
+                        <div class="form-group">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
                 </div>
             </div>
         </form>
@@ -40,24 +41,37 @@
 
     
     <div class="row xyz" *ngIf="addNewUserFlag && !alreadyExists">
+        <form [formGroup]="userRegisterForm" (ngSubmit)="addUser()">    
         <div class="col-xs-12">
             <h1 align="center">
                 Add User
             </h1>
         </div>
-        <div class="col-xs-12 MTB">
-            <label for="user">User Name:</label>
-            <input type="user" id="usr" placeholder="Enter Name" #usr>
+        <div class="form-group">
+                <label>Username : </label>
+                <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.username.errors }" />
+                <div *ngIf="userRegisterSubmitted && userRegisterFormControls.username.errors" class="invalid-feedback">
+                    <div *ngIf="userRegisterFormControls.username.errors.required">Username is required</div>
+                </div>
         </div>
-        <div class="col-xs-12 MTB">
-            <label for="mobile">Mobile:</label>
-            <input type="mobile" id="mbl" placeholder="Enter Mobile Number" #mobil>
+        <div class="form-group">
+                <label>Mobile Number : </label>
+                <input type="number" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors }" />
+                <div *ngIf="userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors" class="invalid-feedback">
+                    <div *ngIf="userRegisterFormControls.mobileNumber.errors.required">Mobile Number is required</div>
+                </div>
         </div>
-        <div class="col-xs-12 MTB">
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Enter email" #email>
+        <div class="form-group">
+                <label>Email Address : </label>
+                <input type="email" formControlName="emailAddress" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.emailAddress.errors }" />
+                <div *ngIf="userRegisterSubmitted && userRegisterFormControls.emailAddress.errors" class="invalid-feedback">
+                    <div *ngIf="userRegisterFormControls.emailAddress.errors.required">Email Address is required</div>
+                </div>
         </div>
-        <div class="col-xs-12 button-add"><button class="btn btn-purple" type="submit" (click)="addUser(usr.value,mobil.value,email.value)">Add User</button></div>
+        <div class="form-group">
+                <button class="btn btn-primary">Add User</button>
+            </div>
+        </form>
     </div>
     <div *ngIf="alreadyExists">
     <h1>User Already Exists</h1>
