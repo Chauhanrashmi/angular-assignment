@@ -7,9 +7,9 @@
                 <div class="col-xs-4">
                         <div class="form-group">
                                 <label>Search by Mobile Number : </label>
-                                <input type="number" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userSearchSubmitted && userSearchFormControls.mobileNumber.errors }" />
+                                <input type="text" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userSearchSubmitted && userSearchFormControls.mobileNumber.errors }" maxlength="10" minlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" pattern="[0-9]+"/>
                                 <div *ngIf="userSearchSubmitted && userSearchFormControls.mobileNumber.errors" class="invalid-feedback">
-                                    <div *ngIf="userSearchFormControls.mobileNumber.errors.required">Mobile Number is required</div>
+                                    <div *ngIf="userSearchFormControls.mobileNumber.errors.required" style="color:red">Mobile Number is required</div>
                                 </div>
                         </div>
                         <div class="form-group">
@@ -51,21 +51,22 @@
                 <label>Username : </label>
                 <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.username.errors }" />
                 <div *ngIf="userRegisterSubmitted && userRegisterFormControls.username.errors" class="invalid-feedback">
-                    <div *ngIf="userRegisterFormControls.username.errors.required">Username is required</div>
+                    <div *ngIf="userRegisterFormControls.username.errors.required" style="color:red">Username is required</div>
                 </div>
         </div>
         <div class="form-group">
                 <label>Mobile Number : </label>
-                <input type="number" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors }" />
+                <input type="text" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors }" maxlength="10" minlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" pattern="[0-9]+"/>
                 <div *ngIf="userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors" class="invalid-feedback">
-                    <div *ngIf="userRegisterFormControls.mobileNumber.errors.required">Mobile Number is required</div>
+                    <div *ngIf="userRegisterFormControls.mobileNumber.errors.required" style="color:red">Mobile Number is required</div>
                 </div>
         </div>
         <div class="form-group">
                 <label>Email Address : </label>
                 <input type="email" formControlName="emailAddress" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.emailAddress.errors }" />
                 <div *ngIf="userRegisterSubmitted && userRegisterFormControls.emailAddress.errors" class="invalid-feedback">
-                    <div *ngIf="userRegisterFormControls.emailAddress.errors.required">Email Address is required</div>
+                    <div *ngIf="userRegisterFormControls.emailAddress.errors.required" style="color:red">Email Address is required</div>
+                     <div *ngIf="userRegisterFormControls.emailAddress.errors.email" style="color:red">Email must be a valid email address</div>
                 </div>
         </div>
         <div class="form-group">

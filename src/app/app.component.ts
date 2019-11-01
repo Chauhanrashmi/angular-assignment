@@ -29,7 +29,7 @@ export class AppComponent {
     this.userRegisterForm = this.formBuilder.group({
       username: ['', Validators.required],
       mobileNumber: ['', Validators.required],
-      emailAddress: ['', Validators.required]
+      emailAddress: ['', [Validators.required, Validators.email]]
     });
 
     this.userSearchForm = this.formBuilder.group({

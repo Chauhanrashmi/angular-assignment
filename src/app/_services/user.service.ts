@@ -8,6 +8,7 @@ import { User } from '../_model/user';
 export class UserService {
 
     users = [
+        { id: 3, name: 'Aashi' , mobile: '9595148112', email: 'ashi@gmail.com'},
         { id: 1, name: 'Renu', mobile: '9595148291', email: 'renu@gmail.com'  },
         { id: 2, name: 'Rashmi' , mobile: '9595148111', email: 'rashmi@gmail.com'}
       ];
