@@ -1,24 +1,30 @@
-<div class="container">
+<div class="container" id="pro">
    <div class="row" *ngIf="!addNewUserFlag">
+    <!--  Search form starts here -->
     <form [formGroup]="userSearchForm" (ngSubmit)="doSearch()">
             <div class="row">
-                <div class="col-xs-12">
-                </div>
                 <div class="col-xs-4">
+                </div>
+                <div class="col-xs-4" id="searchform">
                         <div class="form-group">
                                 <label>Search by Mobile Number : </label>
                                 <input type="text" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userSearchSubmitted && userSearchFormControls.mobileNumber.errors }" maxlength="10" minlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" pattern="[0-9]+"/>
                                 <div *ngIf="userSearchSubmitted && userSearchFormControls.mobileNumber.errors" class="invalid-feedback">
-                                    <div *ngIf="userSearchFormControls.mobileNumber.errors.required" style="color:red">Mobile Number is required</div>
+                                    <div *ngIf="userSearchFormControls.mobileNumber.errors.required">Mobile Number is required</div>
                                 </div>
                         </div>
                         <div class="form-group">
                                 <button class="btn btn-primary">Search</button>
                             </div>
                 </div>
+                <div class="col-xs-4">
+                </div>
             </div>
         </form>
-        <table class="table table-striped">
+    <!--  Search form ends here -->
+
+   <!--  Table displaying data starts here -->
+        <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                   <th>User Name</th>
@@ -34,13 +40,14 @@
                 </tr>
             </tbody>
         </table>
-        <div>
+        <div id="reset">
             <button class="btn btn-primary" (click)="assignCopy()">Reset List</button>
         </div>
     </div>
-
+   <!-- Table displaying data ends here -->
     
     <div class="row xyz" *ngIf="addNewUserFlag && !alreadyExists">
+    <!--  Add new user form starts here --> 
         <form [formGroup]="userRegisterForm" (ngSubmit)="addUser()">    
         <div class="col-xs-12">
             <h1 align="center">
@@ -51,14 +58,14 @@
                 <label>Username : </label>
                 <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.username.errors }" />
                 <div *ngIf="userRegisterSubmitted && userRegisterFormControls.username.errors" class="invalid-feedback">
-                    <div *ngIf="userRegisterFormControls.username.errors.required" style="color:red">Username is required</div>
+                    <div *ngIf="userRegisterFormControls.username.errors.required">Username is required</div>
                 </div>
         </div>
         <div class="form-group">
                 <label>Mobile Number : </label>
                 <input type="text" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors }" maxlength="10" minlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" pattern="[0-9]+"/>
                 <div *ngIf="userRegisterSubmitted && userRegisterFormControls.mobileNumber.errors" class="invalid-feedback">
-                    <div *ngIf="userRegisterFormControls.mobileNumber.errors.required" style="color:red">Mobile Number is required</div>
+                    <div *ngIf="userRegisterFormControls.mobileNumber.errors.required">Mobile Number is required</div>
                 </div>
         </div>
         <div class="form-group">
@@ -66,13 +73,14 @@
                 <input type="email" formControlName="emailAddress" class="form-control" [ngClass]="{ 'is-invalid': userRegisterSubmitted && userRegisterFormControls.emailAddress.errors }" />
                 <div *ngIf="userRegisterSubmitted && userRegisterFormControls.emailAddress.errors" class="invalid-feedback">
                     <div *ngIf="userRegisterFormControls.emailAddress.errors.required" style="color:red">Email Address is required</div>
-                     <div *ngIf="userRegisterFormControls.emailAddress.errors.email" style="color:red">Email must be a valid email address</div>
+                     <div *ngIf="userRegisterFormControls.emailAddress.errors.email">Email must be a valid email address</div>
                 </div>
         </div>
         <div class="form-group">
                 <button class="btn btn-primary">Add User</button>
             </div>
         </form>
+    <!--  Add new user form ends here -->
     </div>
     <div *ngIf="alreadyExists">
     <h1>User Already Exists</h1>

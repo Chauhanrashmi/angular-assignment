@@ -75,3 +75,39 @@
 .MTB {
   margin: 10px 0px;
 }
+
+/* Style the errors */
+.invalid-feedback{
+  color:red;
+}
+
+/* Style the forms */
+#searchform{
+    text-align: center;
+}
+
+.form-control {
+    border: 1px solid #337ab7;
+}
+
+/* Style the table */
+th,tr,thead{
+  text-align: center;
+}
+thead{
+  background-color: #aacfef;
+}
+.table-bordered {
+    border: 3px solid #8bbfeb;
+}
+/* Style the buttons */
+#reset{
+  text-align: center;
+}
+
+.form-control[_ngcontent-xfr-c0] {
+    border: 1px solid #337ab7;
+}
+#pro{
+  margin-top: 20px;
+}
